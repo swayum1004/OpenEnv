@@ -1,0 +1,42 @@
+name: email-triage-env
+version: "1.0.0"
+description: >
+  A real-world email and customer support triage environment where agents must
+  classify, prioritize, route, and draft responses to incoming support emails.
+  Mirrors the daily workflow of a support team: reading tickets, assessing urgency,
+  identifying the correct department, and composing accurate replies.
+author: farhan
+tags:
+  - email
+  - support
+  - triage
+  - nlp
+  - real-world
+tasks:
+  - id: classify_and_prioritize
+    name: Classify & Prioritize
+    difficulty: easy
+    description: >
+      Classify an incoming support email by category (billing, technical, general, abuse)
+      and assign a priority level (low, medium, high, critical). Scored on both accuracy dimensions.
+  - id: route_and_summarize
+    name: Route & Summarize
+    difficulty: medium
+    description: >
+      Given a multi-email inbox snapshot, route each ticket to the correct team,
+      extract key entities (customer ID, product, issue), and produce a structured summary.
+  - id: full_triage_pipeline
+    name: Full Triage Pipeline
+    difficulty: hard
+    description: >
+      Complete end-to-end triage: classify, prioritize, route, extract entities, detect
+      sentiment/tone, flag policy violations, and draft a professional first-response email.
+      Scored across 7 weighted sub-criteria.
+observation_space:
+  type: object
+  description: Current inbox state with email content, metadata, and history
+action_space:
+  type: object
+  description: Structured triage action with classification, routing, priority, and response fields
+reward_range: [0.0, 1.0]
+episode_steps: 10
