@@ -8,7 +8,7 @@ from __future__ import annotations
 import os
 from typing import Any, Dict, Optional
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -113,7 +113,16 @@ def list_tasks():
 
 
 @app.post("/reset", response_model=ResetResponse)
-def reset(req: ResetRequest):
+def reset(req: Optional[ResetRequest] = Body(default=None)):
+    
+    # ✅ fallback if evaluator sends empty body
+    if req is None:
+        req = ResetRequest(
+            task_id="classify_and_prioritize",
+            session_id="default-session",
+            max_steps=10
+        )
+
     valid_tasks = EmailTriageEnv.VALID_TASKS
     if req.task_id not in valid_tasks:
         raise HTTPException(status_code=400, detail=f"task_id must be one of {valid_tasks}")
@@ -122,7 +131,11 @@ def reset(req: ResetRequest):
     obs = env.reset()
     _sessions[req.session_id] = env
 
-    return ResetResponse(observation=obs, session_id=req.session_id, task_id=req.task_id)
+    return ResetResponse(
+        observation=obs,
+        session_id=req.session_id,
+        task_id=req.task_id
+    )
 
 
 @app.post("/step", response_model=StepResponse)
