@@ -125,7 +125,7 @@ The `draft_response` is scored on: greeting present, issue acknowledged, next st
 ### Local (Python)
 
 ```bash
-git clone https://github.com/your-username/email-triage-env
+git clone https://github.com/swayum1004/OpenEnv.git
 cd email-triage-env
 pip install -r requirements.txt
 ```
