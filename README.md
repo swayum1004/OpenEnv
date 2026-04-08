@@ -257,4 +257,6 @@ email-triage-env/
 
 ## License
 
-MIT
+Swayum Hastwala
+Farhan Ansari
+Bhavana Koli
